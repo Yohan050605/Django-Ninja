@@ -40,4 +40,10 @@ def update_employee(request, employee_id: int, payload: EmployeeIn):
     for attr, value in payload.dict().items():
         setattr(employee, attr, value)
     employee.save()
-    return {"success" : True}
+    return {"success": True}
+
+@api.delete("/employees/{employee_id}")
+def delete_employee(requests, employee_id: int):
+    employee = get_object_or_404(Employee, id=employee_id)
+    employee.delete()
+    return {"success": True}
