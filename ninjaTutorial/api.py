@@ -33,3 +33,11 @@ def get_employee(requests, employee_id: int):
 def list_employee(requests):
     qs = Employee.objects.all()
     return qs
+
+@api.put("/employees/{employee_id}")
+def update_employee(request, employee_id: int, payload: EmployeeIn):
+    employee = get_object_or_404(Employee, id=employee_id)
+    for attr, value in payload.dict().items():
+        setattr(employee, attr, value)
+    employee.save()
+    return {"success" : True}
