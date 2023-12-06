@@ -2,6 +2,7 @@ from ninja import NinjaAPI, Schema
 from datetime import date
 from api.models import *
 from django.shortcuts import get_object_or_404
+from typing import List
 
 api = NinjaAPI()
 
@@ -27,3 +28,8 @@ def create_emplayee(requests, payload: EmployeeIn):
 def get_employee(requests, employee_id: int):
     employee = get_object_or_404(Employee, id=employee_id)
     return employee
+
+@api.get("/employees", response = List[EmployeeOut])
+def list_employee(requests):
+    qs = Employee.objects.all()
+    return qs
